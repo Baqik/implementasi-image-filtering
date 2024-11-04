@@ -1,0 +1,42 @@
+import numpy as np
+
+# Step 1: Initialize the filter kernel (H), input image (X), and output image (Y)
+# Define H as a 2D kernel matrix (for example, a 3x3 Gaussian kernel or edge detection kernel)
+H = np.array([
+    [1, 1,1],
+    [1, 4,1],
+    [1, 1,1]
+])
+
+# Define X as a sample input image matrix
+# Example: a 5x5 grayscale image with arbitrary values
+X = np.array([
+    [0,0,0,0,0,0],
+    [0,1,0,0,0,0],
+    [0,1,1,1,0,0],
+    [0,1,1,1,0,0],
+    [0,1,0,0,0,0],
+    [0,0,0,0,0,0]
+])
+
+# Initialize Y as a zero matrix with the same dimensions as X
+Y = np.zeros_like(X)
+
+# Dimensions for the filter kernel
+nFilterX, nFilterY = H.shape
+
+# Step 2: Perform the convolution operation as per the given algorithm
+for x in range(X.shape[0] - nFilterX + 1):
+    for y in range(X.shape[1] - nFilterY + 1):
+        # Initialize z(x, y) for the current position
+        z_xy = 0
+        for k1 in range(nFilterX):
+            for k2 in range(nFilterY):
+                # Convolution operation: sum of element-wise product
+                z_xy += H[k1, k2] * X[x + k1, y + k2]
+        # Assign the result to the output matrix
+        Y[x, y] = z_xy
+
+# Step 3: Print the output image matrix Y
+print("Output Image Matrix Y:")
+print(Y)
